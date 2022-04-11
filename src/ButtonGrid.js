@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { Button, Grid, GridItem } from "@chakra-ui/react"
 
+import { getRandomItem} from "./lib/getRandomItem"
+
 const Cell = ({ value, isSelected = false, onClick }) => (
   <GridItem alignSelf="center" justifySelf="center">
     <Button
@@ -33,7 +35,7 @@ const ButtonGrid = () => {
       return
     }
 
-    setSelectedValues(values => {
+    setSelectedValues(() => {
       const val = getRandomItem(availableValues)
       return [...selectedValues, val]
     })

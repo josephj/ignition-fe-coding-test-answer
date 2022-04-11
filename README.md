@@ -24,8 +24,6 @@ _If you cannot complete these exercises in less than 2 hours, you may find techn
 
 Write a function `isValidDecimal` that takes a `string` and returns
 
-TODO: It's ambiguous for the `number` input especially when test indicates it's true
-
 - `true`, if it receives a string representing a valid decimal
 - `false`, if input is not a valid decimal
 
