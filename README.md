@@ -62,7 +62,7 @@ Component is fixed when:
 
 - spinner doesn't show, and
 - clicking the button increments value, and
-- current value calculation is shown as a correct correct
+- current value calculation is shown as a correct
 
 NOTE:
 

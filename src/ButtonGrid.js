@@ -1,8 +1,6 @@
 import { useState } from "react"
 import { Button, Grid, GridItem } from "@chakra-ui/react"
 
-import { getRandomNumber } from "./lib/getRandomNumber"
-
 const Cell = ({ value, isSelected = false, onClick }) => (
   <GridItem alignSelf="center" justifySelf="center">
     <Button
@@ -17,22 +15,28 @@ const Cell = ({ value, isSelected = false, onClick }) => (
   </GridItem>
 )
 
-const MIN = 1
-const TOTAL = 9
+const LIST_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-const initialValue = getRandomNumber({ min: MIN, max: TOTAL })
+
 
 const ButtonGrid = () => {
-  const [selectedValue, setSelectedValue] = useState(initialValue)
+  const [selectedValues, setSelectedValues] = useState([getRandomItem(LIST_VALUES)])
 
-  const handleChange = (value) => () => {
-    if (value !== selectedValue) {
-      setSelectedValue(value)
-    } else {
-      setSelectedValue(
-        getRandomNumber({ min: MIN, max: TOTAL, exclude: value })
-      )
+  const handleClick = (value) => () => {
+    if (!selectedValues.includes(value)) {
+      setSelectedValues(values => [...values, value])
+      return
     }
+
+    const availableValues = LIST_VALUES.filter(val => !selectedValues.includes(val))
+    if (!availableValues.length) {
+      return
+    }
+
+    setSelectedValues(values => {
+      const val = getRandomItem(availableValues)
+      return [...selectedValues, val]
+    })
   }
 
   return (
@@ -43,14 +47,12 @@ const ButtonGrid = () => {
       width="300px"
       margin="0 auto"
     >
-      {Array.from({ length: TOTAL }, (_, index) => {
-        const value = index + 1
-        const isSelected = value === selectedValue
-
+      {LIST_VALUES.map((value, offset) => {
+        const isSelected = selectedValues.includes(value)
         return (
           <Cell
-            key={`cell-${index}`}
-            onClick={handleChange(value)}
+            key={`cell-${offset}`}
+            onClick={handleClick(value)}
             {...{ isSelected, value }}
           />
         )
